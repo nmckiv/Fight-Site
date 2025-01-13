@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Fall2024_FinalProject</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/3/atlas.min.css" integrity="sha384-nGRUjEtI0HcF/qADxRNzqVIqYF88oVEvS+xcUqNwbkrDimXlcNtoqCjAJw4QPSFn" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://startbootstrap.github.io/startbootstrap-sb-admin-2/css/sb-admin-2.min.css" integrity="sha384-L7YL+e58VSPWpp57XEGMxh8ti1j/Eko03PhfVL4BpSYvHNQXISkGXXGwaruzo02K" crossorigin="anonymous">
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-text mx-3">Fight Site</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+
+            <!-- Nav Item - Home -->
+            <li class="nav-item text-light text-lg-center">
+                <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">
+                    Home
+                </a>
+                    
+                </a>
+            </li>
+            <!-- Nav Item - Privacy -->
+            <li class="nav-item text-light text-lg-center">
+                <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">
+                    Privacy
+                
+                </a>
+            </li>
+            <!-- Nav Item - Bets -->
+            <li class="nav-item text-light text-lg-center">
+                <a class="nav-link " asp-area="" asp-controller="Bet" asp-action="Index">My Bets</a>
+              
+            </li>
+            <!-- Nav Item - Fights -->
+            <li class="nav-item text-light text-lg-center">
+                <a class="nav-link " asp-area="" asp-controller="Fight" asp-action="Index">Fights</a>
+              
+            </li>
+            <!-- Nav Item - Fighters -->
+            <li class="nav-item text-light text-lg-center">
+                <a class="nav-link " asp-area="" asp-controller="Fighter" asp-action="Index">Fighters</a>
+             
+            </li>
+            @if (User.IsInRole("Admin")){
+                <!-- Nav Item - Account -->
+                <li class="nav-item text-light text-lg-center">
+                    <a class="nav-link " asp-area="" asp-controller="User" asp-action="Index">User</a>
+                </li>
+            }
+            <partial name="_LoginPartial" />
+        </ul>
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Add any topbar items here -->
+                    </ul>
+                </nav>
+                <!-- End of Topbar -->
+                <!-- Main Content -->
+                <div class="container-fluid">
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
+                <!-- End of Main Content -->
+            </div>
+
+            <!-- Footer -->
+            <footer class="border-top footer text-muted">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>&copy; 2024 - Fight Site - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/3/atlas.min.js" integrity="sha384-rYYUckpvWOoJUZnHzxyF6rK6E7zsHWUrwfwUyVqLL5Uf5GhUxRoXU8xejjHlzNAX" crossorigin="anonymous"></script>
+    <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/sb-admin-2.min.js" integrity="sha384-NyXZ4IHHLouxsfN5daLmqOKMe6qMiX6eECltOB+ROoGhPDcVETqgjqhnkBim3LKE" crossorigin="anonymous"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

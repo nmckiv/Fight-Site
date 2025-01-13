@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Fall2024_FinalProject</RootNamespace>
+    <UserSecretsId>2c4b69e8-3db9-4af9-a72e-cda4ce0d8d4a</UserSecretsId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <ItemGroup>
+    <Compile Remove="wwwroot\lib\startbootstrap-sb-admin-2-gh-pages\**" />
+    <Content Remove="wwwroot\lib\startbootstrap-sb-admin-2-gh-pages\**" />
+    <EmbeddedResource Remove="wwwroot\lib\startbootstrap-sb-admin-2-gh-pages\**" />
+    <None Remove="wwwroot\lib\startbootstrap-sb-admin-2-gh-pages\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Data\" />
+    <None Remove="Enums\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Enums\" />
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.11">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.11" />
+    <PackageReference Include="Azure.AI.OpenAI" Version="2.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\Icons\warning.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\icons\warning.svg" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,82 @@
+﻿html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+/* Greyed out fights */
+.overlay-grey {
+    position: relative;
+}
+
+    .overlay-grey::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(128, 128, 128, 0.5);
+        z-index: 1;
+    }
+
+    .overlay-grey .card-body {
+        position: relative;
+        z-index: 2;
+    }
+
+#map {
+    height: 400px;
+    width: 100%;
+}
+
+.fixed-size-img {
+    width: 300px; 
+    height: 300px;
+    object-fit: cover; /* Ensures the image scales and crops to fit the container without stretching */
+}
+
+.odds-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.odds-label {
+    flex: 1;
+    text-align: center;
+}
+
+.odds-left {
+    text-align: left;
+    flex: 1;
+}
+
+.odds-right {
+    text-align: right;
+    flex: 1;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Adjust spacing between buttons as needed */
+}

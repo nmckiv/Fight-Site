@@ -1,0 +1,89 @@
+@model Fall2024_FinalProject.Models.Bet
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1 class="text-center">Delete Bet</h1>
+
+<h3 class="text-center text-danger">Are you sure you want to delete this?</h3>
+
+<div class="card mt-4">
+    <div class="card-header bg-primary text-white">
+        <h4>Bet Details</h4>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <!-- User -->
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.User)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.User.Name)
+            </dd>
+
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Fight.Location)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Fight.Location)
+            </dd>
+
+            <!-- Chosen Fighter -->
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.ChosenFighter)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.ChosenFighter.Name)
+            </dd>
+
+            <!-- Bet Amount -->
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.BetAmount)
+            </dt>
+            <dd class="col-sm-8">
+                $@Html.DisplayFor(model => model.BetAmount)
+            </dd>
+
+            <!-- Odds -->
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Odds)
+            </dt>
+            <dd class="col-sm-8">
+                @if (Model.Odds > 0)
+                {
+                    @Html.DisplayFor(model => model.Odds)
+                    }
+                else
+                {
+                    @Html.DisplayFor(model => model.Odds)
+                }
+            </dd>
+
+            <!-- Result -->
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.IsWin)
+            </dt>
+            <dd class="col-sm-8">
+                @if (Model.IsWin.HasValue)
+                {
+                    <span class="badge @(@Model.IsWin.Value ? "bg-success" : "bg-danger")">
+                        @(@Model.IsWin.Value ? "Win" : "Loss")
+                    </span>
+                }
+                else
+                {
+                    <span class="badge bg-warning">Pending</span>
+                }
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <form asp-action="Delete" class="d-inline">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger btn-lg" />
+    </form>
+    <a asp-action="Index" class="btn btn-secondary btn-lg ms-2">Cancel</a>
+</div>

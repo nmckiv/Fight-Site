@@ -1,0 +1,71 @@
+@model IEnumerable<Fall2024_FinalProject.Models.FightAggregate>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center">All Fights</h1>
+
+@if (User.IsInRole("Admin"))
+    {
+        <p class="text-center">
+            <a asp-action="Create" class="btn btn-success">Create New</a>
+        </p>
+    }
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-6 mb-4">
+            <div class="card @(item.Fight.Winner != null ? "overlay-grey" : "")">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(item.Fighter1.FighterPhoto)"
+                                 alt="Fighter Photo"
+                                 class="fixed-size-img rounded w-100" />
+                        </div>
+                        <div class="col-md-6">
+                            @if (item.Fight.Winner != null)
+                            {
+                                <h3 class="card-title">@item.Fight.Winner Won!</h3>
+                            }
+                            else
+                            {
+                                <h3 class="card-title">@item.Fighter1.Name vs @item.Fighter2.Name</h3>
+                            }
+                            <p class="card-text">
+                                <strong>Date:</strong> @Html.DisplayFor(modelItem => item.Fight.Date)<br />
+                                <strong>Location:</strong> @Html.DisplayFor(modelItem => item.Fight.Location)<br />
+                            </p>
+                            <div class="odds-container">
+                                <div class="odds-left">@Html.DisplayFor(modelItem => item.Fight.Fighter1Odds)</div>
+                                <div class="odds-label"><strong>Odds</strong></div>
+                                <div class="odds-right">@Html.DisplayFor(modelItem => item.Fight.Fighter2Odds)</div>
+                            </div>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <div class="buttons-container">
+                                <a asp-action="Details" asp-route-id="@item.Fight.Id" class="btn btn-info">Details</a>
+                                @if (User.IsInRole("Admin"))
+                                    {
+                                        <!--  WALTA admin access here -->
+                                        <a asp-action="Edit" asp-route-id="@item.Fight.Id" class="btn btn-secondary">Edit</a>
+                                        <!--  WALTA admin access here -->
+                                        <a asp-action="Delete" asp-route-id="@item.Fight.Id" class="btn btn-danger">Delete</a>
+                                    }
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(item.Fighter2.FighterPhoto)"
+                                 alt="Fighter Photo"
+                                 class="fixed-size-img rounded w-100" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

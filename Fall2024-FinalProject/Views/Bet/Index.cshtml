@@ -1,0 +1,107 @@
+@model IEnumerable<Fall2024_FinalProject.Models.Bet>
+
+@{
+    ViewData["Title"] = "Bets";
+}
+
+<h1>My Bets</h1>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Bet</a>
+</p>
+
+<table class="table table-hover table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Event</th>
+            <th>Selection</th>
+            <th>Odds</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr id="bet-@item.Id">
+                <td class="event-column" data-fight-id="@item.FightId">
+                    <span class="event">Loading...</span> <!-- Placeholder for event details -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ChosenFighter.Name)
+                </td>
+                <td>
+                    @if (item.Odds > 0)
+                    {
+                        @: +@item.Odds <!-- Display positive odds with "+" -->
+                    }
+                    else
+                    {
+                        @item.Odds
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BetAmount)
+                </td>
+                <td>
+                    @if (item.IsWin.HasValue)
+                    {
+                        <span class="badge @(@item.IsWin.Value ? "badge-success" : "badge-danger")">
+                            @(@item.IsWin.Value ? "Win" : "Loss")
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-warning">Pending</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>$(document).ready(function () {
+            $('tr[id^="bet-"]').each(function () {
+                var fightId = $(this).find('.event-column').data('fight-id');
+                var eventColumn = $(this).find('.event');
+
+                if (fightId) {
+                    $.ajax({
+                        url: '/Bet/GetFightersByFightId',
+                        type: 'GET',
+                        data: { fightId: fightId },
+                        success: function (data) {
+                            if (data && data.length === 2) {
+                                const eventText = `${data[0].name} vs ${data[1].name}`;
+                                eventColumn.text(eventText);
+                            } else {
+                                eventColumn.text('Error loading event');
+                            }
+                        },
+                        error: function () {
+                            eventColumn.text('Error loading event');
+                        }
+                    });
+                }
+            });
+        });</script>
+}

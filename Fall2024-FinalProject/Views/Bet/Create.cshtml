@@ -1,0 +1,105 @@
+@model Fall2024_FinalProject.Models.Bet
+
+@{
+    ViewData["Title"] = "Create Bet";
+}
+
+<h1 class="text-center">Create Bet</h1>
+
+<h4 class="text-muted text-center">Place Your Bet</h4>
+<hr />
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <!-- Event Dropdown -->
+            <div class="form-group">
+                <label asp-for="FightId" class="form-label">Event</label>
+                <select id="fightDropdown" asp-for="FightId" class="form-select" asp-items="ViewBag.FightId">
+                    <option value="">-- Select an event --</option>
+                </select>
+                <span asp-validation-for="FightId" class="text-danger"></span>
+            </div>
+
+            <!-- Selection Dropdown -->
+            <div class="form-group">
+                <label asp-for="ChosenFighterId" class="form-label">Selection</label>
+                <select id="fighterDropdown" asp-for="ChosenFighterId" class="form-select" asp-items="ViewBag.ChosenFighterId">
+                    <option value="">-- Select a fighter --</option>
+                </select>
+                <span asp-validation-for="ChosenFighterId" class="text-danger"></span>
+            </div>
+
+            <!-- Bet Amount Input -->
+            <div class="form-group">
+                <label asp-for="BetAmount" class="form-label">Bet Amount</label>
+                <input asp-for="BetAmount" class="form-control" placeholder="Enter your bet amount" />
+                <span asp-validation-for="BetAmount" class="text-danger"></span>
+            </div>
+
+            <!-- Validation Errors -->
+            @if (ViewData.ModelState.ContainsKey("BetAmount") && ViewData.ModelState["BetAmount"].Errors.Any())
+            {
+                <div class="alert alert-danger mt-3">
+                    @foreach (var error in ViewData.ModelState["BetAmount"].Errors)
+                    {
+                        <p>@error.ErrorMessage</p>
+                    }
+                </div>
+            }
+
+            <!-- Submit Button -->
+            <div class="form-group text-center mt-4">
+                <input type="submit" value="Place Bet" class="btn btn-primary btn-lg" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>$(document).ready(function () {
+            // When the fight dropdown changes
+            $("#fightDropdown").change(function () {
+                const fightId = $(this).val();
+                const fighterDropdown = $("#fighterDropdown");
+
+                // Reset the fighter dropdown
+                fighterDropdown.html('<option value="">-- Select a fighter --</option>');
+
+                if (!fightId) {
+                    return; // Exit if no fight is selected
+                }
+
+                // Fetch fighters and odds for the selected fight
+                $.ajax({
+                    url: `/Bet/GetFightersByFightId`,
+                    type: "GET",
+                    data: { fightId: fightId },
+                    success: function (data) {
+                        if (data.success === false) {
+                            alert(data.message || "Could not load fighters. Please try again.");
+                            return;
+                        }
+
+                        // Populate the fighter dropdown
+                        data.forEach(function (fighter) {
+                            let oddsDisplay = fighter.odds > 0 ? `+${fighter.odds}` : fighter.odds;
+                            fighterDropdown.append(`<option value="${fighter.id}">${fighter.name} (${oddsDisplay})</option>`);
+                        });
+                    },
+                    error: function () {
+                        alert("Could not load fighters. Please try again.");
+                    }
+                });
+            });
+        });</script>
+}

@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="display-3 fw-bold text-primary">Welcome to <em>Fight Site!</em></h1>
+        <p class="lead text-muted">Your one-stop site for thrilling bets and epic battles!</p>
+        <hr class="my-4">
+    </div>
+
+    <div class="text-center mt-4">
+        <h2 class="display-5 fw-bold">Why Choose Us?</h2>
+        <p class="mt-3 fs-5">
+            Got an itch to make some bets? Look no further! Las Vegas is expensive,
+            so fulfill that betting urge with our <em class="text-success">$$FREE$$</em> betting site!
+        </p>
+        <p class="fs-5">
+            Explore our fighters, dive into their stats, and discover their whimsical AI-generated backstories!
+        </p>
+        <p class="fs-5">
+            Place your bets and enjoy AI-generated summaries of each fight. Wins will be automatically updated in your balance—no need to worry about anything!
+        </p>
+        <p class="fs-5">
+            <em>Your spouse won't be mad at at you spending all your time on this sportsbook!</em>
+        </p>
+        <p class="fs-5 fw-bold text-warning">What are you waiting for? Let’s go!</p>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <a asp-controller="Fighter" asp-action="Index" class="btn btn-lg btn-primary mx-3">
+            Browse Fighters
+        </a>
+        <a asp-controller="Fight" asp-action="Index" class="btn btn-lg btn-success mx-3">
+            Browse Fights
+        </a>
+    </div>
+</div>

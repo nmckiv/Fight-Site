@@ -1,0 +1,29 @@
+﻿@model UserRoleViewModel
+
+<h2>Change Role for @Model.UserName</h2>
+
+<form asp-action="UpdateUserRole" method="post">
+    <input type="hidden" asp-for="UserId" />
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label>Current Role</label>
+            <input type="text" value="@Model.CurrentRole" class="form-control" readonly />
+        </div>
+
+        <div class="col-md-6 form-group">
+            <label asp-for="SelectedRole">New Role</label>
+            <select asp-for="SelectedRole" class="form-control">
+                <option disabled selected>Select a Role</option>
+                @foreach (var role in Model.AllRoles)
+                {
+                    <option value="@role">@role</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group text-center">
+        <input type="submit" value="Save" class="btn btn-lg btn-primary" />
+        <a asp-action="Index" class="btn btn-lg btn-secondary">Back to User List</a>
+    </div>
+</form>

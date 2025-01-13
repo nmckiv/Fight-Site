@@ -1,0 +1,81 @@
+@model Fall2024_FinalProject.Models.Fighter
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h2 class="text-center">Add a New Fighter</h2>
+        <hr />
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <!-- Left Column: Basic Details -->
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Weight" class="control-label"></label>
+                        <input asp-for="Weight" class="form-control" />
+                        <span asp-validation-for="Weight" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FighterStyle"></label>
+                        <select asp-for="FighterStyle" asp-items="ViewBag.FightingStyles" class="form-control">
+                            <option value="" selected disabled>Select a fighting style</option>
+                        </select>
+                        <span asp-validation-for="FighterStyle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FighterPhoto" class="control-label"></label>
+                        <input asp-for="FighterPhoto" type="file" class="form-control" name="photo" />
+                        <span asp-validation-for="FighterPhoto" class="text-danger"></span>
+                    </div>
+                </div>
+                <!-- Right Column: Stats -->
+                <div class="col-6">
+                    <div class="form-group">
+                        <span id="healthLabel" class="fs-5">Health: @(Model?.Health ?? 5)/10</span>
+                        <input asp-for="Health" type="range" class="form-range" min="1" max="10" step="1"
+                               value="@(Model?.Health ?? 5)"
+                               oninput="document.getElementById('healthLabel').innerText = `Health: ${this.value}/10`" />
+                        <span asp-validation-for="Health" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <span id="strengthLabel" class="fs-5">Strength: @(Model?.Strength ?? 5)/10</span>
+                        <input asp-for="Strength" type="range" class="form-range" min="1" max="10" step="1"
+                               value="@(Model?.Strength ?? 5)"
+                               oninput="document.getElementById('strengthLabel').innerText = `Strength: ${this.value}/10`" />
+                        <span asp-validation-for="Strength" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <span id="agilityLabel" class="fs-5">Agility: @(Model?.Agility ?? 5)/10</span>
+                        <input asp-for="Agility" type="range" class="form-range" min="1" max="10" step="1"
+                               value="@(Model?.Agility ?? 5)"
+                               oninput="document.getElementById('agilityLabel').innerText = `Agility: ${this.value}/10`" />
+                        <span asp-validation-for="Agility" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <span id="intelligenceLabel" class="fs-5">Intelligence: @(Model?.Intelligence ?? 5)/10</span>
+                        <input asp-for="Intelligence" type="range" class="form-range" min="1" max="10" step="1"
+                               value="@(Model?.Intelligence ?? 5)"
+                               oninput="document.getElementById('intelligenceLabel').innerText = `Intelligence: ${this.value}/10`" />
+                        <span asp-validation-for="Intelligence" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group text-center mt-4">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,127 @@
+@model Fall2024_FinalProject.Models.FighterViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 class="text-center">
+    @Html.DisplayFor(model => model.Fighter.Name)
+</h1>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="row" style="height: 100%;">
+            <!-- Left column: Photo and Weight -->
+            <div class="col-6 d-flex flex-column align-items-center justify-content-center">
+                <div class="mb-3">
+                    @if (Model.Fighter.FighterPhoto != null && Model.Fighter.FighterPhoto.Length > 0)
+                    {
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Fighter.FighterPhoto)" alt="Fighter Photo" class="img-fluid rounded" style="width:400px;height:auto;" />
+                    }
+                    else
+                    {
+                        <p>No photo available</p>
+                    }
+                </div>
+                <div class="d-flex">
+                    <span class="font-weight-bold me-2">@Html.DisplayNameFor(model => model.Fighter.Weight):</span>
+                    <span>@Html.DisplayFor(model => model.Fighter.Weight)</span>
+                </div>
+            </div>
+
+            <!-- Right column: Stats and Fighting Style -->
+            <div class="col-6 d-flex flex-column justify-content-center">
+                <div class="w-100">
+                    <dl class="row">
+                        @* Health *@
+                        <div class="row mb-3 align-items-center">
+                            <div class="col-4 text-end">
+                                <span>@Html.DisplayNameFor(model => model.Fighter.Health)</span>
+                            </div>
+                            <div class="col-6">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: @(Model.Fighter.Health * 10)%;" aria-valuenow="@Model.Fighter.Health" aria-valuemin="0" aria-valuemax="10"></div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <span>@Model.Fighter.Health</span>
+                            </div>
+                        </div>
+
+                        @* Strength *@
+                        <div class="row mb-3 align-items-center">
+                            <div class="col-4 text-end">
+                                <span>@Html.DisplayNameFor(model => model.Fighter.Strength)</span>
+                            </div>
+                            <div class="col-6">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: @(Model.Fighter.Strength * 10)%;" aria-valuenow="@Model.Fighter.Strength" aria-valuemin="0" aria-valuemax="10"></div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <span>@Model.Fighter.Strength</span>
+                            </div>
+                        </div>
+
+                        @* Agility *@
+                        <div class="row mb-3 align-items-center">
+                            <div class="col-4 text-end">
+                                <span>@Html.DisplayNameFor(model => model.Fighter.Agility)</span>
+                            </div>
+                            <div class="col-6">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: @(Model.Fighter.Agility * 10)%;" aria-valuenow="@Model.Fighter.Agility" aria-valuemin="0" aria-valuemax="10"></div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <span>@Model.Fighter.Agility</span>
+                            </div>
+                        </div>
+
+                        @* Intelligence *@
+                        <div class="row mb-3 align-items-center">
+                            <div class="col-4 text-end">
+                                <span>@Html.DisplayNameFor(model => model.Fighter.Intelligence)</span>
+                            </div>
+                            <div class="col-6">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: @(Model.Fighter.Intelligence * 10)%;" aria-valuenow="@Model.Fighter.Intelligence" aria-valuemin="0" aria-valuemax="10"></div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <span>@Model.Fighter.Intelligence</span>
+                            </div>
+                        </div>
+
+                        @* Fighting Style*@
+                        <div class="row mb-3 align-items-center">
+                            <div class="col-4 text-end">
+                                <span>@Html.DisplayNameFor(model => model.Fighter.FighterStyle)</span>
+                            </div>
+                            <div class="col-8">
+                                <span>@Html.DisplayFor(model => model.Fighter.FighterStyle)</span>
+                            </div>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-3">
+    <div class="card-header">
+        <h3>About Me</h3>
+    </div>
+    <div class="card-body">
+        <p>@Model.Backstory</p>
+    </div>
+</div>
+
+<div class="mt-4">
+    @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Edit" asp-route-id="@Model?.Fighter.Id" class="btn btn-primary me-2">Edit</a>
+        }
+    <a asp-action="Index" class="btn btn-secondary me-2">Back to List</a>
+</div>

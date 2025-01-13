@@ -1,0 +1,63 @@
+@model Fall2024_FinalProject.Models.Bet
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Bet</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.User.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Fight)
+        </dt>
+        <dt class="col-sm-10">
+            @Html.DisplayFor(model => model.Fight.Longitude)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayNameFor(model => model.Fight.Longitude)
+        </dd>
+        <dt class="col-sm-10">
+            @Html.DisplayFor(model => model.Fight.Latitude)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayNameFor(model => model.Fight.Latitude)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ChosenFighter)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ChosenFighter.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BetAmount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BetAmount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Odds)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Odds)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsWin)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsWin)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

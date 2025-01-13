@@ -1,0 +1,107 @@
+@model Fall2024_FinalProject.Models.Fight
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<!-- deletion warning -->
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between">
+            <p class="mb-0 text-warning fw-bold fs-5 text-center" style="flex-grow: 1;">
+                Are you sure you want to delete this fighter? <br> This action cannot be undone!
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+
+                <!-- Fight Details -->
+                <div class="row mb-4">
+                    <!-- Date Section -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Date" class="form-label fw-bold">Date</label>
+                            <p class="form-control-plaintext border p-2 rounded bg-light">
+                                @Html.DisplayFor(model => model.Date)
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Location Section -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Location" class="form-label fw-bold">Location</label>
+                            <p class="form-control-plaintext border p-2 rounded bg-light">
+                                @Html.DisplayFor(model => model.Location)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fighter 1 Details -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-danger text-white">
+                                <h5 class="card-title mb-0">Fighter 1</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label asp-for="Fighter1Id" class="form-label">Name</label>
+                                    <p class="form-control-plaintext border p-2 rounded bg-light">
+                                        @Html.DisplayFor(model => model.Fighter1Id)
+                                    </p>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="Fighter1Odds" class="form-label">Odds</label>
+                                    <p class="form-control-plaintext border p-2 rounded bg-light">
+                                        @Html.DisplayFor(model => model.Fighter1Odds)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fighter 2 Details -->
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-danger text-white">
+                                <h5 class="card-title mb-0">Fighter 2</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label asp-for="Fighter2Id" class="form-label">ID</label>
+                                    <p class="form-control-plaintext border p-2 rounded bg-light">
+                                        @Html.DisplayFor(model => model.Fighter2Id)
+                                    </p>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="Fighter2Odds" class="form-label">Odds</label>
+                                    <p class="form-control-plaintext border p-2 rounded bg-light">
+                                        @Html.DisplayFor(model => model.Fighter2Odds)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Buttons -->
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Delete Fight
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

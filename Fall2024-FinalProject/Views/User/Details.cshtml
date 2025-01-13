@@ -1,0 +1,92 @@
+@model Fall2024_FinalProject.Models.User
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 class="text-center">User Details</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 d-flex flex-column align-items-center">
+                <h3 class="card-title">@Model.Name</h3>
+                <div class="d-flex">
+                    <div class="col-4">
+                        @if (Model.ProfilePhoto != null)
+                        {
+                            var base64 = Convert.ToBase64String(Model.ProfilePhoto);
+                            var imgSrc = $"data:image/jpeg;base64,{base64}";
+                            <img src="@imgSrc" alt="Profile Photo" class="img-fluid rounded w-100" style="height: 200px; width: auto; object-fit: cover;" />
+                        }
+                    </div>
+
+                    <div class="col-8 d-flex flex-column">
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="fs-5 fw-medium">Email: </span>
+                            <span class="fs-5 fw-medium">@Model.Email</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="fs-5 fw-medium">Balance: </span>
+                            <span class="fs-5 fw-medium">@Model.Balance</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="fs-5 fw-medium">Role:</span>
+                            <span class="fs-5 fw-medium">@Model.Role</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <h4 class="card-subtitle mb-2 text-muted">Bets</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fight Time</th>
+                    <th>Chosen Fighter</th>
+                    <th>Bet Amount</th>
+                    <th>Odds</th>
+                    <th>Outcome</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Bets != null && Model.Bets.Any())
+                {
+                    foreach (var bet in Model.Bets)
+                    {
+                        <tr>
+                            <td>@bet.Fight.Date.ToString("MMMM dd, yyyy hh:mm tt")</td>
+                            <td>@bet.ChosenFighter.Name</td>
+                            <td>@bet.BetAmount</td>
+                            <td>@bet.Odds</td>
+                            <td>
+                                @if (bet.IsWin == true)
+                                {
+                                    <span>Won</span>
+                                }
+                                else if (bet.IsWin == false)
+                                {
+                                    <span>Lost</span>
+                                }
+                                else
+                                {
+                                    <span>Pending</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">No bets found for this user.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center mt-3">
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+@model Fall2024_FinalProject.Models.User
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<h1>Edit User: @Model.Name</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Role" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Balance" class="control-label"></label>
+                <input asp-for="Balance" class="form-control" />
+                <span asp-validation-for="Balance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="ProfilePhoto" type="file" class="form-control" />
+                <label asp-for="ProfilePhoto" class="form-label">Profile Photo</label>
+                @if (Model.ProfilePhoto != null)
+                {
+                    var base64 = Convert.ToBase64String(Model.ProfilePhoto);
+                    var imgSrc = $"data:image/jpg;base64,{base64}";
+                    <img src="@imgSrc" style="width:150px;height:auto" />
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

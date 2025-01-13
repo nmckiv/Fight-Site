@@ -1,0 +1,159 @@
+@model Fall2024_FinalProject.Models.Fight
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container py-4">
+    <h1 class="mb-4">Schedule a New Fight</h1>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <!-- Date Section -->
+                <div class="mb-4">
+                    <label asp-for="Date" class="form-label fw-bold"></label>
+                    <input asp-for="Date" class="form-control" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+
+                <!-- Fighters Section -->
+                <div class="row mb-4">
+                    <!-- Fighter 1 -->
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="card-title mb-0">Fighter 1</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label asp-for="Fighter1Id" class="form-label"></label>
+                                    <select asp-for="Fighter1Id" class="form-select" asp-items="ViewBag.Fighter1Id"></select>
+                                    <span asp-validation-for="Fighter1Id" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="Fighter1Odds" class="form-label"></label>
+                                    <input asp-for="Fighter1Odds" class="form-control" step="25" />
+                                    <span asp-validation-for="Fighter1Odds" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fighter 2 -->
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="card-title mb-0">Fighter 2</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label asp-for="Fighter2Id" class="form-label"></label>
+                                    <select asp-for="Fighter2Id" class="form-select" asp-items="ViewBag.Fighter2Id"></select>
+                                    <span asp-validation-for="Fighter2Id" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="Fighter2Odds" class="form-label"></label>
+                                    <input asp-for="Fighter2Odds" class="form-control" step="25" />
+                                    <span asp-validation-for="Fighter2Odds" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Location Section -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0">Fight Location</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="map" class="mb-3" style="height: 300px;"></div>
+                        <input type="hidden" asp-for="Latitude" id="Latitude" />
+                        <input type="hidden" asp-for="Longitude" id="Longitude" />
+                        <input type="hidden" asp-for="Location" id="Location" />
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Selected Location</label>
+                            <p id="locationName" class="form-control-static border p-2 rounded bg-light"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Buttons -->
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-lg"></i> Create Fight
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @*<script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>*@
+    <script>
+        var map, datasource, centerMarker;
+
+        function initMap() {
+            map = new atlas.Map('map', {
+                center: [-87.50,33.2],
+                zoom: 5,
+                authOptions: {
+                    authType: 'subscriptionKey',
+                    subscriptionKey: "@ViewBag.MapApiKey"
+                }
+            });
+
+            // Wait until the map resources are ready.
+            map.events.add('ready', function () {
+                // Create a data source and add it to the map.
+                datasource = new atlas.source.DataSource();
+                map.sources.add(datasource);
+
+                // Create a layer for rendering the marker.
+                var symbolLayer = new atlas.layer.SymbolLayer(datasource);
+                map.layers.add(symbolLayer);
+
+                // Add a marker to the map.
+                centerMarker = new atlas.Shape(new atlas.data.Point(map.getCamera().center));
+                datasource.add(centerMarker);
+
+                // Update the form fields when the map is clicked.
+                map.events.add('click', function (e) {
+                    var position = e.position;
+                    centerMarker.setCoordinates(position);
+
+                    var latitude = position[1];
+                    var longitude = position[0];
+
+                    document.getElementById('Latitude').value = latitude;
+                    document.getElementById('Longitude').value = longitude;
+
+                    // Fetch the location name using the reverse geocoding API
+                    fetch(`/api/Fight/GetLocationName?latitude=${latitude}&longitude=${longitude}`)
+                    .then(response => response.text())
+                    .then(address => {
+                            document.getElementById('locationName').innerText = address;
+                            document.getElementById('Location').value = address;
+                    })
+                    .catch(error => { 
+                        console.error('Error fetching location name:', error); 
+                        document.getElementById('locationName').innerText = "Location not found: Error"; 
+                    });
+                });
+            });
+        }
+
+        window.onload = initMap;
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+</html>
